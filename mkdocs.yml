@@ -1,0 +1,14 @@
+site_name: Lya Health Docs
+
+theme:
+  name: material
+  language: pt-BR
+
+plugins:
+  - render_swagger:
+      allow_arbitrary_locations : true
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true

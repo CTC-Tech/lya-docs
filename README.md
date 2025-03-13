@@ -1,1 +1,1 @@
-# lya-docs
+# Lya Docs

@@ -1,0 +1,1347 @@
+openapi: 3.1.0
+info:
+  title: Lya Health API
+  description: Lya Health API Service
+  version: '2.0'
+
+servers:
+  - url: https://api.lyahealth.com.br/
+    description: Servidor de Homologação
+  - url: https://api.lya-health-hml.ctctech.link/
+    description: Servidor de Produção
+
+paths:
+  /tenants/validate/:
+    get:
+      tags:
+        - Lya Tenants
+      summary: Validate Tenant
+      operationId: validate_tenant
+      security:
+        - HTTPBearer: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+
+  /patients/v1/auth/me/:
+    get:
+      tags:
+        - Lya Patients
+      summary: Lya Patients Validate Token
+      operationId: patients_validate_token
+      security:
+        - HTTPBearer: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /patients/v1/repositories/:
+    get:
+      tags:
+        - Lya Patients
+      summary: Get Repositories
+      security:
+        - HTTPBearer: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - Lya Patients
+      summary: Create Repositories
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRepositorySchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRepositorySchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /patients/v1/repositories/{uuid}/:
+    parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema:
+          title: Repository UUID
+          type: string
+    get:
+      tags:
+        - Lya Patients
+      summary: Retrieve Repository
+      security:
+        - HTTPBearer: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRepositorySchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+        - Lya Patients
+      summary: Update Repository
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRepositorySchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRepositorySchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - Lya Patients
+      summary: Delete Repository
+      security:
+        - HTTPBearer: []
+      responses:
+        '204':
+          description: Successful Response
+
+  /integration/api/v2/actors/current/:
+    get:
+      tags:
+        - Lya API
+      summary: Current Actor
+      operationId: actors_current
+      security:
+        - HTTPBearer: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/:
+    get:
+      tags: &lya_api
+        - Lya Health API
+      summary: List Patients
+      operationId: list_organization_patients
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            description: Page number
+            default: 1
+            title: Page
+          description: Page number
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+            description: Page size
+            default: 50
+            title: Size
+          description: Page size
+        - name: query
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Query
+        - name: order_by
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Order By
+        - name: uuid
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: uuid
+              - type: 'null'
+            title: Uuid
+        - name: name
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Name
+        - name: document
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Document
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_RetrievePatientSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags: *lya_api
+      summary: Create Patient
+      operationId: create_organization_patient
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePatientSchema'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePatientSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_uuid}/:
+    get:
+      tags:
+        - Lya API
+      summary: Retrieve Patient
+      operationId: retrieve_organization_patient
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Patient Uuid
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePatientSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+        - Lya API
+      summary: Update Patient
+      operationId: update_organization_patient
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Patient Uuid
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePatientSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePatientSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - Lya API
+      summary: Delete Patient
+      operationId: delete_organization_patient
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Patient Uuid
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/:
+    get:
+      tags:
+        - Lya API
+      summary: List Tenant Credentials
+      operationId: list_tenant_credentials
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            description: Page number
+            default: 1
+            title: Page
+          description: Page number
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+            description: Page size
+            default: 50
+            title: Size
+          description: Page size
+        - name: query
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Query
+        - name: order_by
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Order By
+        - name: host
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Host
+        - name: tenant_slug
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Tenant Slug
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_RetrieveTenantCredentialSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+        - Lya API
+      summary: Create Tenant Credential
+      operationId: create_organization_tenant_credential
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTenantCredentialSchema'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/{tenant_credential_id}/:
+    get:
+      tags:
+        - Lya API
+      summary: Retrieve Tenant Credential
+      operationId: retrieve_organization_tenant_credential
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: tenant_credential_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Tenant Credential Id
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+        - Lya API
+      summary: Update Tenant Credential
+      operationId: update_organization_tenant_credential
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: tenant_credential_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Tenant Credential Id
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTenantCredentialSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - Lya API
+      summary: Delete Tenant Credential
+      operationId: delete_organization_tenant_credential
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: tenant_credential_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Tenant Credential Id
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/resources/:
+    get:
+      tags:
+        - Lya API
+      summary: List Patient Resources
+      operationId: list_patient_resources_in_organization
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            description: Page number
+            default: 1
+            title: Page
+          description: Page number
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+            description: Page size
+            default: 50
+            title: Size
+          description: Page size
+        - name: query
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Query
+        - name: order_by
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Order By
+        - name: patient__name__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Patient  Name  Ilike
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_RetrievePatientResourcesSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/:
+    post:
+      tags:
+        - Lya API
+      summary: Create Patient Resources
+      operationId: create_patient_resources_in_organization
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Patient Identifier Value
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePatientResourcesSchema'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePatientResourcesSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/{resource_identifier_value}/:
+    get:
+      tags:
+        - Lya API
+      summary: Retrieve Patient Resources
+      operationId: retrieve_patient_resources_in_organization
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Patient Identifier Value
+        - name: resource_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Resource Identifier Value
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePatientResourcesSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+        - Lya API
+      summary: Update Patient Resources
+      operationId: update_patient_resources_in_organization
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Patient Identifier Value
+        - name: resource_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Resource Identifier Value
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePatientResourcesSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePatientResourcesSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - Lya API
+      summary: Delete Patient Resources
+      operationId: delete_patient_resources_in_organization
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: patient_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Patient Identifier Value
+        - name: resource_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: integer
+              - type: string
+            title: Resource Identifier Value
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HttpAdapterSchema:
+      properties:
+        adapter_type:
+          const: http
+          default: http
+          type: string
+          title: Adapter Type
+        url_template:
+          type: string
+          title: URL Template
+        query_mapping:
+          type: object
+          title: Query Mapping
+      type: object
+      title: HttpAdapterSchema
+    HttpBearerAdapterSchema:
+      properties:
+        adapter_type:
+          const: http_bearer
+          default: http_bearer
+          type: string
+          title: Adapter Type
+        url_template:
+          type: string
+          title: URL Template
+        query_mapping:
+          type: object
+          title: Query Mapping
+        token:
+          type: string
+          title: Token
+      type: object
+      title: HttpBearerAdapterSchema
+    HttpOAuth2AdapterSchema:
+      properties:
+        adapter_type:
+          const: http_oauth2
+          default: http_oauth2
+          type: string
+          title: Adapter Type
+        url_template:
+          type: string
+          title: URL Template
+        query_mapping:
+          type: object
+          title: Query Mapping
+        client_id:
+          type: string
+          title: Client ID
+        client_secret:
+          type: string
+          title: Client Secret
+        token_url:
+          type: string
+          title: Token URL
+        scope:
+          items:
+            type: string
+          type: array
+          title: Token URL
+      type: object
+      title: HttpOAuth2AdapterSchema
+    CreateRepositorySchema:
+      properties:
+        adapter:
+          type: object
+          title: Adapter
+          oneOf:
+            - $ref: '#/components/schemas/HttpAdapterSchema'
+            - $ref: '#/components/schemas/HttpBearerAdapterSchema'
+            - $ref: '#/components/schemas/HttpOAuth2AdapterSchema'
+      type: object
+      title: CreateRepositorySchema
+    UpdateRepositorySchema:
+      properties:
+        adapter:
+          type: object
+          title: Adapter
+          oneOf:
+            - $ref: '#/components/schemas/HttpAdapterSchema'
+            - $ref: '#/components/schemas/HttpBearerAdapterSchema'
+            - $ref: '#/components/schemas/HttpOAuth2AdapterSchema'
+      type: object
+      title: UpdateRepositorySchema
+    RetrieveRepositorySchema:
+      properties:
+        uuid:
+          type: string
+          title: Tenant Slug
+        tenant_slug:
+          type: string
+          title: Tenant Slug
+        adapter:
+          type: object
+          title: Adapter
+          oneOf:
+            - $ref: '#/components/schemas/HttpAdapterSchema'
+            - $ref: '#/components/schemas/HttpBearerAdapterSchema'
+            - $ref: '#/components/schemas/HttpOAuth2AdapterSchema'
+      type: object
+      title: RetrieveRepositorySchema
+    CreatePatientSchema:
+      properties:
+        name:
+          type: string
+          title: Name
+        document:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Document
+        document_type:
+          anyOf:
+            - $ref: '#/components/schemas/PatientDocumentTypeEnum'
+            - type: 'null'
+        metadata_external_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Metadata External Id
+      type: object
+      required:
+        - name
+      title: CreatePatientSchema
+    CreatePatientResourcesSchema:
+      properties:
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+        - url
+      title: CreatePatientResourcesSchema
+    CreateTenantCredentialSchema:
+      properties:
+        host:
+          type: string
+          title: Host
+        tenant_slug:
+          type: string
+          title: Tenant Slug
+        secret_key:
+          type: string
+          title: Secret Key
+      type: object
+      required:
+        - host
+        - tenant_slug
+        - secret_key
+      title: CreateTenantCredentialSchema
+    Page_RetrievePatientSchema_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/RetrievePatientSchema'
+          type: array
+          title: Items
+        total:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Total
+        page:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: 'null'
+          title: Page
+        size:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: 'null'
+          title: Size
+        pages:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Pages
+      type: object
+      required:
+        - items
+        - total
+        - page
+        - size
+      title: Page[RetrievePatientSchema]
+    Page_RetrievePatientResourcesSchema_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/RetrievePatientResourcesSchema'
+          type: array
+          title: Items
+        total:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Total
+        page:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: 'null'
+          title: Page
+        size:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: 'null'
+          title: Size
+        pages:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Pages
+      type: object
+      required:
+        - items
+        - total
+        - page
+        - size
+      title: Page[RetrievePatientResourcesSchema]
+    Page_RetrieveTenantCredentialSchema_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
+          type: array
+          title: Items
+        total:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Total
+        page:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: 'null'
+          title: Page
+        size:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: 'null'
+          title: Size
+        pages:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Pages
+      type: object
+      required:
+        - items
+        - total
+        - page
+        - size
+      title: Page[RetrieveTenantCredentialSchema]
+    RetrievePatientSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+        name:
+          type: string
+          title: Name
+        document:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Document
+        document_type:
+          anyOf:
+            - $ref: '#/components/schemas/PatientDocumentTypeEnum'
+            - type: 'null'
+        metadata_external_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Metadata External Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        deleted_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+          title: Deleted At
+      type: object
+      required:
+        - id
+        - uuid
+        - name
+        - document
+        - document_type
+        - metadata_external_id
+        - created_at
+        - updated_at
+        - deleted_at
+      title: RetrievePatientSchema
+    RetrievePatientResourcesSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        url:
+          type: string
+          title: Url
+        patient:
+          $ref: '#/components/schemas/RetrievePatientSchema'
+      type: object
+      required:
+        - id
+        - url
+        - patient
+      title: RetrievePatientResourcesSchema
+    RetrieveTenantCredentialSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        host:
+          type: string
+          title: Host
+        tenant_slug:
+          type: string
+          title: Tenant Slug
+        secret_key:
+          type: string
+          title: Secret Key
+        organization_id:
+          type: integer
+          title: Organization Id
+      type: object
+      required:
+        - id
+        - host
+        - tenant_slug
+        - secret_key
+        - organization_id
+      title: RetrieveTenantCredentialSchema
+    UpdatePatientSchema:
+      properties:
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+        document:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Document
+        document_type:
+          anyOf:
+            - $ref: '#/components/schemas/PatientDocumentTypeEnum'
+            - type: 'null'
+        metadata_external_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Metadata External Id
+      type: object
+      title: UpdatePatientSchema
+    UpdatePatientResourcesSchema:
+      properties:
+        url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Url
+      type: object
+      required:
+        - url
+      title: UpdatePatientResourcesSchema
+    UpdateTenantCredentialSchema:
+      properties:
+        host:
+          type: string
+          title: Host
+        tenant_slug:
+          type: string
+          title: Tenant Slug
+        secret_key:
+          type: string
+          title: Secret Key
+      type: object
+      required:
+        - host
+        - tenant_slug
+        - secret_key
+      title: UpdateTenantCredentialSchema
+    PatientDocumentTypeEnum:
+      type: string
+      enum:
+        - cpf
+        - rg
+      title: PatientDocumentTypeEnum
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
