@@ -1,9 +1,8 @@
 name: CD
-on: pull_request
+on: push
 
 jobs:
   cd:
-    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -12,5 +11,5 @@ jobs:
           cache: "pipenv"
       - uses: tiagovrtr/actions-pipenv@v1
         with:
-          pipenv-version: ${{ matrix.pipenv-version }}
+          pipenv-version: "3.13"
       - run: pipenv run mkdocs gh-deploy
