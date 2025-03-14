@@ -12,5 +12,5 @@ jobs:
           cache: "pipenv"
       - uses: tiagovrtr/actions-pipenv@v1
         with:
-          pipenv-version: "3.13"
+          pipenv-version: "2024.4.1"
       - run: pipenv run mkdocs gh-deploy
