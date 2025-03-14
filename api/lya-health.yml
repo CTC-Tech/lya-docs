@@ -2,12 +2,12 @@ openapi: 3.1.0
 info:
   title: Lya Health API
   description: Lya Health API Service
-  version: '2.0'
+  version: "2.0"
 
 servers:
-  - url: https://api.lyahealth.com.br/
-    description: Servidor de Homologação
   - url: https://api.lya-health-hml.ctctech.link/
+    description: Servidor de Homologação
+  - url: https://api.lyahealth.com.br/
     description: Servidor de Produção
 
 paths:
@@ -20,60 +20,61 @@ paths:
       security:
         - HTTPBearer: []
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+              schema:
+                $ref: "#/components/schemas/ValidateTenantSchema"
+        "403":
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/ValidateTenantUnauthorizedErrorSchema"
 
   /patients/v1/auth/me/:
     get:
-      tags:
+      tags: &lya_patients
         - Lya Patients
       summary: Lya Patients Validate Token
       operationId: patients_validate_token
       security:
         - HTTPBearer: []
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+              schema:
+                $ref: "#/components/schemas/TenantAuthorizationSchema"
+        "403":
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/ValidateTenantUnauthorizedErrorSchema"
   /patients/v1/repositories/:
     get:
-      tags:
-        - Lya Patients
+      tags: *lya_patients
       summary: Get Repositories
       security:
         - HTTPBearer: []
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema: {}
-        '422':
+              schema:
+                $ref: "#/components/schemas/ListRepositorySchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     post:
-      tags:
-        - Lya Patients
+      tags: *lya_patients
       summary: Create Repositories
       security:
         - HTTPBearer: []
@@ -82,20 +83,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateRepositorySchema'
+              $ref: "#/components/schemas/CreateRepositorySchema"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveRepositorySchema'
-        '422':
+                $ref: "#/components/schemas/RetrieveRepositorySchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
   /patients/v1/repositories/{uuid}/:
     parameters:
       - name: uuid
@@ -105,27 +106,25 @@ paths:
           title: Repository UUID
           type: string
     get:
-      tags:
-        - Lya Patients
+      tags: *lya_patients
       summary: Retrieve Repository
       security:
         - HTTPBearer: []
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveRepositorySchema'
-        '422':
+                $ref: "#/components/schemas/RetrieveRepositorySchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     patch:
-      tags:
-        - Lya Patients
+      tags: *lya_patients
       summary: Update Repository
       security:
         - HTTPBearer: []
@@ -134,54 +133,53 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateRepositorySchema'
+              $ref: "#/components/schemas/UpdateRepositorySchema"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveRepositorySchema'
-        '422':
+                $ref: "#/components/schemas/RetrieveRepositorySchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     delete:
-      tags:
-        - Lya Patients
+      tags: *lya_patients
       summary: Delete Repository
       security:
         - HTTPBearer: []
       responses:
-        '204':
+        "204":
           description: Successful Response
 
   /integration/api/v2/actors/current/:
     get:
-      tags:
-        - Lya API
+      tags: &lya_health_api
+        - Lya Health API
       summary: Current Actor
       operationId: actors_current
       security:
         - HTTPBearer: []
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+              schema:
+                $ref: "#/components/schemas/TenantActorSchema"
+        "403":
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/ValidateTenantUnauthorizedErrorSchema"
   /integration/api/v2/organizations/{organization_identifier_value}/patients/:
     get:
-      tags: &lya_api
-        - Lya Health API
+      tags: *lya_health_api
       summary: List Patients
       operationId: list_organization_patients
       security:
@@ -222,7 +220,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Query
         - name: order_by
           in: query
@@ -230,7 +228,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Order By
         - name: uuid
           in: query
@@ -239,7 +237,7 @@ paths:
             anyOf:
               - type: string
                 format: uuid
-              - type: 'null'
+              - type: "null"
             title: Uuid
         - name: name
           in: query
@@ -247,7 +245,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Name
         - name: document
           in: query
@@ -255,23 +253,23 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Document
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Page_RetrievePatientSchema_'
-        '422':
+                $ref: "#/components/schemas/ListPatientSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     post:
-      tags: *lya_api
+      tags: *lya_health_api
       summary: Create Patient
       operationId: create_organization_patient
       security:
@@ -290,24 +288,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePatientSchema'
+              $ref: "#/components/schemas/CreatePatientSchema"
       responses:
-        '201':
+        "201":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrievePatientSchema'
-        '422':
+                $ref: "#/components/schemas/RetrievePatientSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_uuid}/:
-    get:
-      tags:
-        - Lya API
+                $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_uuid}/
+  : get:
+      tags: *lya_health_api
       summary: Retrieve Patient
       operationId: retrieve_organization_patient
       security:
@@ -328,21 +325,20 @@ paths:
               - type: integer
             title: Identifier Value
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrievePatientSchema'
-        '422':
+                $ref: "#/components/schemas/RetrievePatientSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     patch:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Update Patient
       operationId: update_organization_patient
       security:
@@ -367,23 +363,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatePatientSchema'
+              $ref: "#/components/schemas/UpdatePatientSchema"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrievePatientSchema'
-        '422':
+                $ref: "#/components/schemas/RetrievePatientSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     delete:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Delete Patient
       operationId: delete_organization_patient
       security:
@@ -404,18 +399,17 @@ paths:
               - type: integer
             title: Identifier Value
       responses:
-        '204':
+        "204":
           description: Successful Response
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/:
-    get:
-      tags:
-        - Lya API
+                $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/
+  : get:
+      tags: *lya_health_api
       summary: List Tenant Credentials
       operationId: list_tenant_credentials
       security:
@@ -456,7 +450,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Query
         - name: order_by
           in: query
@@ -464,7 +458,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Order By
         - name: host
           in: query
@@ -472,7 +466,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Host
         - name: tenant_slug
           in: query
@@ -480,24 +474,23 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Tenant Slug
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Page_RetrieveTenantCredentialSchema_'
-        '422':
+                $ref: "#/components/schemas/ListTenantCredentialSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     post:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Create Tenant Credential
       operationId: create_organization_tenant_credential
       security:
@@ -516,24 +509,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTenantCredentialSchema'
+              $ref: "#/components/schemas/CreateTenantCredentialSchema"
       responses:
-        '201':
+        "201":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
-        '422':
+                $ref: "#/components/schemas/RetrieveTenantCredentialSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/{tenant_credential_id}/:
-    get:
-      tags:
-        - Lya API
+                $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/{tenant_credential_id}/
+  : get:
+      tags: *lya_health_api
       summary: Retrieve Tenant Credential
       operationId: retrieve_organization_tenant_credential
       security:
@@ -554,21 +546,20 @@ paths:
               - type: integer
             title: Identifier Value
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
-        '422':
+                $ref: "#/components/schemas/RetrieveTenantCredentialSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     patch:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Update Tenant Credential
       operationId: update_organization_tenant_credential
       security:
@@ -593,23 +584,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTenantCredentialSchema'
+              $ref: "#/components/schemas/UpdateTenantCredentialSchema"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
-        '422':
+                $ref: "#/components/schemas/RetrieveTenantCredentialSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     delete:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Delete Tenant Credential
       operationId: delete_organization_tenant_credential
       security:
@@ -630,18 +620,17 @@ paths:
               - type: integer
             title: Identifier Value
       responses:
-        '204':
+        "204":
           description: Successful Response
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /integration/api/v2/organizations/{organization_identifier_value}/patients/resources/:
-    get:
-      tags:
-        - Lya API
+                $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/patients/resources/
+  : get:
+      tags: *lya_health_api
       summary: List Patient Resources
       operationId: list_patient_resources_in_organization
       security:
@@ -682,7 +671,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Query
         - name: order_by
           in: query
@@ -690,7 +679,7 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Order By
         - name: patient__name__ilike
           in: query
@@ -698,25 +687,24 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Patient  Name  Ilike
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Page_RetrievePatientResourcesSchema_'
-        '422':
+                $ref: "#/components/schemas/ListPatientResourcesSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/:
-    post:
-      tags:
-        - Lya API
+                $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/
+  : post:
+      tags: *lya_health_api
       summary: Create Patient Resources
       operationId: create_patient_resources_in_organization
       security:
@@ -743,24 +731,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePatientResourcesSchema'
+              $ref: "#/components/schemas/CreatePatientResourcesSchema"
       responses:
-        '201':
+        "201":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrievePatientResourcesSchema'
-        '422':
+                $ref: "#/components/schemas/RetrievePatientResourcesSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-  /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/{resource_identifier_value}/:
-    get:
-      tags:
-        - Lya API
+                $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/{resource_identifier_value}/
+  : get:
+      tags: *lya_health_api
       summary: Retrieve Patient Resources
       operationId: retrieve_patient_resources_in_organization
       security:
@@ -791,21 +778,20 @@ paths:
               - type: integer
             title: Identifier Value
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrievePatientResourcesSchema'
-        '422':
+                $ref: "#/components/schemas/RetrievePatientResourcesSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     patch:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Update Patient Resources
       operationId: update_patient_resources_in_organization
       security:
@@ -840,23 +826,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatePatientResourcesSchema'
+              $ref: "#/components/schemas/UpdatePatientResourcesSchema"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrievePatientResourcesSchema'
-        '422':
+                $ref: "#/components/schemas/RetrievePatientResourcesSchema"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
     delete:
-      tags:
-        - Lya API
+      tags: *lya_health_api
       summary: Delete Patient Resources
       operationId: delete_patient_resources_in_organization
       security:
@@ -887,14 +872,14 @@ paths:
               - type: integer
             title: Identifier Value
       responses:
-        '204':
+        "204":
           description: Successful Response
-        '422':
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
 components:
   schemas:
     HttpAdapterSchema:
@@ -965,9 +950,9 @@ components:
           type: object
           title: Adapter
           oneOf:
-            - $ref: '#/components/schemas/HttpAdapterSchema'
-            - $ref: '#/components/schemas/HttpBearerAdapterSchema'
-            - $ref: '#/components/schemas/HttpOAuth2AdapterSchema'
+            - $ref: "#/components/schemas/HttpAdapterSchema"
+            - $ref: "#/components/schemas/HttpBearerAdapterSchema"
+            - $ref: "#/components/schemas/HttpOAuth2AdapterSchema"
       type: object
       title: CreateRepositorySchema
     UpdateRepositorySchema:
@@ -976,9 +961,9 @@ components:
           type: object
           title: Adapter
           oneOf:
-            - $ref: '#/components/schemas/HttpAdapterSchema'
-            - $ref: '#/components/schemas/HttpBearerAdapterSchema'
-            - $ref: '#/components/schemas/HttpOAuth2AdapterSchema'
+            - $ref: "#/components/schemas/HttpAdapterSchema"
+            - $ref: "#/components/schemas/HttpBearerAdapterSchema"
+            - $ref: "#/components/schemas/HttpOAuth2AdapterSchema"
       type: object
       title: UpdateRepositorySchema
     RetrieveRepositorySchema:
@@ -993,11 +978,18 @@ components:
           type: object
           title: Adapter
           oneOf:
-            - $ref: '#/components/schemas/HttpAdapterSchema'
-            - $ref: '#/components/schemas/HttpBearerAdapterSchema'
-            - $ref: '#/components/schemas/HttpOAuth2AdapterSchema'
+            - $ref: "#/components/schemas/HttpAdapterSchema"
+            - $ref: "#/components/schemas/HttpBearerAdapterSchema"
+            - $ref: "#/components/schemas/HttpOAuth2AdapterSchema"
       type: object
       title: RetrieveRepositorySchema
+    ListRepositorySchema:
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/RetrieveRepositorySchema"
+          type: array
+          title: Items
     CreatePatientSchema:
       properties:
         name:
@@ -1006,16 +998,16 @@ components:
         document:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Document
         document_type:
           anyOf:
-            - $ref: '#/components/schemas/PatientDocumentTypeEnum'
-            - type: 'null'
+            - $ref: "#/components/schemas/PatientDocumentTypeEnum"
+            - type: "null"
         metadata_external_id:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Metadata External Id
       type: object
       required:
@@ -1047,36 +1039,32 @@ components:
         - tenant_slug
         - secret_key
       title: CreateTenantCredentialSchema
-    Page_RetrievePatientSchema_:
+    ListPatientSchema:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/RetrievePatientSchema'
+            $ref: "#/components/schemas/RetrievePatientSchema"
           type: array
           title: Items
         total:
           anyOf:
             - type: integer
-              minimum: 0
-            - type: 'null'
+              example: 1
           title: Total
         page:
           anyOf:
             - type: integer
-              minimum: 1
-            - type: 'null'
+              example: 1
           title: Page
         size:
           anyOf:
             - type: integer
-              minimum: 1
-            - type: 'null'
+              example: 1
           title: Size
         pages:
           anyOf:
             - type: integer
-              minimum: 0
-            - type: 'null'
+              example: 1
           title: Pages
       type: object
       required:
@@ -1085,36 +1073,32 @@ components:
         - page
         - size
       title: Page[RetrievePatientSchema]
-    Page_RetrievePatientResourcesSchema_:
+    ListPatientResourcesSchema:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/RetrievePatientResourcesSchema'
+            $ref: "#/components/schemas/RetrievePatientResourcesSchema"
           type: array
           title: Items
         total:
           anyOf:
             - type: integer
-              minimum: 0
-            - type: 'null'
+              example: 1
           title: Total
         page:
           anyOf:
             - type: integer
-              minimum: 1
-            - type: 'null'
+              example: 1
           title: Page
         size:
           anyOf:
             - type: integer
-              minimum: 1
-            - type: 'null'
+              example: 1
           title: Size
         pages:
           anyOf:
             - type: integer
-              minimum: 0
-            - type: 'null'
+              example: 1
           title: Pages
       type: object
       required:
@@ -1123,36 +1107,32 @@ components:
         - page
         - size
       title: Page[RetrievePatientResourcesSchema]
-    Page_RetrieveTenantCredentialSchema_:
+    ListTenantCredentialSchema:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/RetrieveTenantCredentialSchema'
+            $ref: "#/components/schemas/RetrieveTenantCredentialSchema"
           type: array
           title: Items
         total:
           anyOf:
             - type: integer
-              minimum: 0
-            - type: 'null'
+              example: 1
           title: Total
         page:
           anyOf:
             - type: integer
-              minimum: 1
-            - type: 'null'
+              example: 1
           title: Page
         size:
           anyOf:
             - type: integer
-              minimum: 1
-            - type: 'null'
+              example: 1
           title: Size
         pages:
           anyOf:
             - type: integer
-              minimum: 0
-            - type: 'null'
+              example: 1
           title: Pages
       type: object
       required:
@@ -1176,16 +1156,16 @@ components:
         document:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Document
         document_type:
           anyOf:
-            - $ref: '#/components/schemas/PatientDocumentTypeEnum'
-            - type: 'null'
+            - $ref: "#/components/schemas/PatientDocumentTypeEnum"
+            - type: "null"
         metadata_external_id:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Metadata External Id
         created_at:
           type: string
@@ -1199,7 +1179,7 @@ components:
           anyOf:
             - type: string
               format: date-time
-            - type: 'null'
+            - type: "null"
           title: Deleted At
       type: object
       required:
@@ -1222,7 +1202,7 @@ components:
           type: string
           title: Url
         patient:
-          $ref: '#/components/schemas/RetrievePatientSchema'
+          $ref: "#/components/schemas/RetrievePatientSchema"
       type: object
       required:
         - id
@@ -1259,21 +1239,21 @@ components:
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
         document:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Document
         document_type:
           anyOf:
-            - $ref: '#/components/schemas/PatientDocumentTypeEnum'
-            - type: 'null'
+            - $ref: "#/components/schemas/PatientDocumentTypeEnum"
+            - type: "null"
         metadata_external_id:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Metadata External Id
       type: object
       title: UpdatePatientSchema
@@ -1282,7 +1262,7 @@ components:
         url:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Url
       type: object
       required:
@@ -1315,7 +1295,7 @@ components:
       properties:
         detail:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
           type: array
           title: Detail
       type: object
@@ -1341,6 +1321,164 @@ components:
         - msg
         - type
       title: ValidationError
+    ValidateTenantSchema:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          example: "abc123"
+        authorizer:
+          type: object
+          properties:
+            tenant_slug:
+              type: string
+              example: "example-tenant"
+            signature:
+              type: string
+              example: "abcd1234efgh5678ijklmnopqrstuvwx"
+            principalId:
+              type: string
+              example: "example-principal"
+            integrationLatency:
+              type: integer
+              example: 5000
+            sonarly_api_principals:
+              type: string
+              example: "organization:1:read_data,organization:1:write_data"
+        resourcePath:
+          type: string
+          example: "/example/resource"
+        httpMethod:
+          type: string
+          example: "POST"
+        extendedRequestId:
+          type: string
+          example: "xyz987654321"
+        requestTime:
+          type: string
+          format: date-time
+          example: "01/Jan/2025:12:00:00 +0000"
+        path:
+          type: string
+          example: "/api/v1/resource"
+        accountId:
+          type: string
+          example: "123456789012"
+        protocol:
+          type: string
+          example: "HTTP/2"
+        stage:
+          type: string
+          example: "production"
+        domainPrefix:
+          type: string
+          example: "api"
+        requestTimeEpoch:
+          type: integer
+          example: 1741000000000
+        requestId:
+          type: string
+          example: "abcd-1234-efgh-5678-ijkl-9012"
+        identity:
+          type: object
+          properties:
+            cognitoIdentityPoolId:
+              type: string
+              nullable: true
+              example: null
+            accountId:
+              type: string
+              nullable: true
+              example: null
+            cognitoIdentityId:
+              type: string
+              nullable: true
+              example: null
+            caller:
+              type: string
+              nullable: true
+              example: null
+            sourceIp:
+              type: string
+              example: "192.168.1.1"
+            principalOrgId:
+              type: string
+              nullable: true
+              example: null
+            accessKey:
+              type: string
+              nullable: true
+              example: null
+            cognitoAuthenticationType:
+              type: string
+              nullable: true
+              example: null
+            cognitoAuthenticationProvider:
+              type: string
+              nullable: true
+              example: null
+            userArn:
+              type: string
+              nullable: true
+              example: null
+            userAgent:
+              type: string
+              example: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            user:
+              type: string
+              nullable: true
+              example: null
+        domainName:
+          type: string
+          example: "api.example.com"
+        deploymentId:
+          type: string
+          example: "deploy-xyz"
+        apiId:
+          type: string
+          example: "api-123456"
+      title: ValidateTenantSchema
+    ValidateTenantUnauthorizedErrorSchema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: "User is not authorized to access this resource"
+      title: ValidateTenantUnauthorizedErrorSchema
+    TenantActorSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "TenantActor"
+        principals:
+          type: array
+          items:
+            type: string
+          example:
+            - "organization:1:read_data"
+            - "organization:1:write_data"
+            - "organization:1:delete_data"
+      title: TenantActorSchema
+    TenantAuthorizationSchema:
+      type: object
+      properties:
+        tenant_slug:
+          type: string
+          example: "example-tenant"
+        signature:
+          type: string
+          example: "abcd1234efgh5678ijklmnopqrstuvwx"
+        principalId:
+          type: string
+          example: "example-principal"
+        integrationLatency:
+          type: integer
+          example: 1500
+        sonarly_api_principals:
+          type: string
+          example: "organization:1:read_data,organization:1:write_data,organization:1:delete_data"
+      title: TenantAuthorizationSchema
   securitySchemes:
     HTTPBearer:
       type: http
