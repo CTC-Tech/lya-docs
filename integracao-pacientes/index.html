@@ -9,8 +9,10 @@
       
       
       
-        <link rel="prev" href="../integracao-pacientes/lya-api/">
+        <link rel="prev" href="..">
       
+      
+        <link rel="next" href="autenticacao/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -18,7 +20,7 @@
     
     
       
-        <title>Definição da API - Lya Health Docs</title>
+        <title>Integração de pacientes - Lya Health Docs</title>
       
     
     
@@ -60,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#definicao-da-api" class="md-skip">
+        <a href="#integracao-de-pacientes" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -96,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Definição da API
+              Integração de pacientes
             
           </span>
         </div>
@@ -170,6 +172,8 @@
       
   
   
+    
+  
   
   
     
@@ -190,16 +194,16 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../integracao-pacientes/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   <span class="md-ellipsis">
@@ -211,13 +215,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Integração de pacientes
@@ -233,7 +237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../integracao-pacientes/autenticacao/" class="md-nav__link">
+      <a href="autenticacao/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -255,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../integracao-pacientes/lya-tenants/" class="md-nav__link">
+      <a href="lya-tenants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -277,7 +281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../integracao-pacientes/lya-patients/" class="md-nav__link">
+      <a href="lya-patients/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -299,7 +303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../integracao-pacientes/lya-api/" class="md-nav__link">
+      <a href="lya-api/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -325,19 +329,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -347,7 +342,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -372,6 +366,116 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Introdução
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Objetivo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-estrutura-da-documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Estrutura da Documentação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-estrutura-dos-servicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Estrutura dos Serviços
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Estrutura dos Serviços">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-lya-tenants" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Lya Tenants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-lya-patients" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Lya Patients
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-lya-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Lya API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-definicao-da-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Definição da API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Definição da API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoints-disponiveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoints Disponíveis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-contato-e-suporte" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Contato e Suporte
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -386,17 +490,37 @@
 
 
 
-<h1 id="definicao-da-api">Definição da API</h1>
-<p><link type="text/css" rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css"></p>
-<div id="swagger-ui-1">
-</div>
-<script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js" charset="UTF-8"></script>
-<script>
-    SwaggerUIBundle({
-      url: 'lya-health.yml',
-      dom_id: '#swagger-ui-1',
-    })
-</script>
+<h1 id="integracao-de-pacientes">Integração de pacientes</h1>
+<h2 id="1-introducao">1. Introdução</h2>
+<p>A API de Integração de Pacientes tem como objetivo permitir que sistemas terceiros integrem e gerenciem informações básicas de pacientes de forma segura e eficiente com o sistema da Lya. Esta documentação fornece detalhes sobre como utilizar a API, incluindo sua finalidade, estrutura e formatos de resposta.</p>
+<h2 id="2-objetivo">2. Objetivo</h2>
+<p>A API foi desenvolvida para possibilitar a recuperação de dados dos pacientes utilizando o padrão FHIR (Fast Healthcare Interoperability Resources), garantindo a interoperabilidade e padronização das informações de saúde. Com essa integração, os dados dos pacientes podem ser acessados e exibidos no sistema Lya durante os atendimentos, facilitando a análise histórica de informações médicas e auxiliando os profissionais de saúde na tomada de decisão. Dessa forma, a API contribui para um atendimento mais ágil e preciso, permitindo a identificação de diagnósticos com mais assertividade.</p>
+<h2 id="3-estrutura-da-documentacao">3. Estrutura da Documentação</h2>
+<p>Para facilitar a compreensão e implementação da API, a documentação está organizada da seguinte forma:</p>
+<ul>
+<li><strong>Informações Gerais:</strong> Contém detalhes básicos sobre a API, como URL base, formato das respostas e versão.</li>
+<li><strong>Autenticação:</strong> Explica os mecanismos de autenticação necessários para acessar a API de forma segura com exemplos.</li>
+<li><strong>Serviços, endpoints e suas funcionalidades:</strong> Descreve os endpoints disponíveis para cada serviço, suas funcionalidades e exemplos de requisição e resposta.</li>
+</ul>
+<h2 id="4-estrutura-dos-servicos">4. Estrutura dos Serviços</h2>
+<p>A API de Integração de Pacientes é composta por diferentes serviços que atuam de forma integrada para garantir a segurança e eficiência na gestão dos dados. Abaixo estão os principais serviços envolvidos:</p>
+<h3 id="41-lya-tenants">4.1. Lya Tenants</h3>
+<p>Serviço responsável por gerenciar os acessos à API, assegurando que apenas aplicações autorizadas possam utilizá-la. Esse serviço gerencia e verifica permissões e credenciais antes de conceder acesso aos recursos da API.</p>
+<p><a href="/doc/lya-tenants-g7JlwX8S4g">Documentação do Lya Tenants</a></p>
+<h3 id="42-lya-patients">4.2. Lya Patients</h3>
+<p>Serviço dedicado à criação e gerenciamento de adaptadores de autenticação para os serviços dos clientes. Ele permite que a Lya utilize as credenciais configuradas para autenticar-se nos sistemas do cliente e recuperar os dados dos pacientes de maneira segura e eficiente.</p>
+<p><a href="/doc/lya-patients-d9eocmlTKa">Documentação do Lya Patients</a></p>
+<h3 id="43-lya-api">4.3. Lya API</h3>
+<p>Serviço principal da integração, responsável pelo gerenciamento dos pacientes dentro do sistema. Os pacientes cadastrados por meio desse serviço estarão disponíveis na Lya, permitindo que os profissionais de saúde os selecionem e realizem atendimentos diretamente pela plataforma.</p>
+<p><a href="/doc/lya-api-7YecitI3Kc">Documentação do Lya API</a></p>
+<h2 id="5-definicao-da-api">5. Definição da API</h2>
+<p>A API de Integração de Pacientes da Lya foi desenvolvida para permitir a comunicação eficiente e segura entre sistemas terceiros e os serviços oferecidos pela plataforma. Ela disponibiliza endpoints que possibilitam a recuperação, o gerenciamento e a autenticação de dados de pacientes, garantindo a interoperabilidade através do padrão <strong>FHIR (Fast Healthcare Interoperability Resources)</strong>.</p>
+<h3 id="endpoints-disponiveis">Endpoints Disponíveis</h3>
+<p>A API conta com uma variedade de endpoints organizados por serviço, incluindo <strong>Lya Tenants</strong>, <strong>Lya Patients</strong> e <strong>Lya API</strong>. Todos os detalhes sobre os endpoints, suas funcionalidades e exemplos de requisição podem ser acessados através do link abaixo:</p>
+<p>🔗 <a href="../api/">Documentação completa dos endpoints</a></p>
+<p>A documentação técnica completa fornece instruções detalhadas sobre cada endpoint, incluindo parâmetros, códigos de resposta e exemplos de uso.</p>
+<h2 id="6-contato-e-suporte">6. Contato e Suporte</h2>
+<p>Em caso de dúvidas ou problemas, entre em contato com o suporte <a href="https://lyahealth.com.br/contato">clicando aqui</a>.</p>
 
 
 
