@@ -3,6 +3,8 @@ site_name: Lya Health Docs
 theme:
   name: material
   language: pt-BR
+  features:
+    - navigation.indexes
 
 plugins:
   - render_swagger:
@@ -12,3 +14,13 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+
+nav:
+  - index.md
+  - Integração de pacientes:
+      - integracao-pacientes/index.md
+      - integracao-pacientes/autenticacao.md
+      - integracao-pacientes/lya-tenants.md
+      - integracao-pacientes/lya-patients.md
+      - integracao-pacientes/lya-api.md
+  - api.md
