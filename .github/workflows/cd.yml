@@ -14,4 +14,8 @@ jobs:
         with:
           pipenv-version: "2024.4.1"
       - run: pipenv install
-      - run: pipenv run mkdocs gh-deploy
+      - run: pipenv run mkdocs build
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./site
