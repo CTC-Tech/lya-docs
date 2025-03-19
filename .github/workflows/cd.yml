@@ -13,4 +13,5 @@ jobs:
       - uses: tiagovrtr/actions-pipenv@v1
         with:
           pipenv-version: "2024.4.1"
+      - run: pipenv install
       - run: pipenv run mkdocs gh-deploy
