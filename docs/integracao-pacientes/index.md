@@ -24,19 +24,19 @@ A API de Integração de Pacientes é composta por diferentes serviços que atua
 
 Serviço responsável por gerenciar os acessos à API, assegurando que apenas aplicações autorizadas possam utilizá-la. Esse serviço gerencia e verifica permissões e credenciais antes de conceder acesso aos recursos da API.
 
-[Documentação do Lya Tenants](/doc/lya-tenants-g7JlwX8S4g)
+[Documentação do Lya Tenants](lya-tenants.md)
 
 ### 4.2. Lya Patients
 
 Serviço dedicado à criação e gerenciamento de adaptadores de autenticação para os serviços dos clientes. Ele permite que a Lya utilize as credenciais configuradas para autenticar-se nos sistemas do cliente e recuperar os dados dos pacientes de maneira segura e eficiente.
 
-[Documentação do Lya Patients](/doc/lya-patients-d9eocmlTKa)
+[Documentação do Lya Patients](lya-patients.md)
 
 ### 4.3. Lya API
 
 Serviço principal da integração, responsável pelo gerenciamento dos pacientes dentro do sistema. Os pacientes cadastrados por meio desse serviço estarão disponíveis na Lya, permitindo que os profissionais de saúde os selecionem e realizem atendimentos diretamente pela plataforma.
 
-[Documentação do Lya API](/doc/lya-api-7YecitI3Kc)
+[Documentação do Lya API](lya-api.md)
 
 ## 5. Definição da API
 
