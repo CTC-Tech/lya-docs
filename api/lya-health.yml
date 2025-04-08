@@ -880,6 +880,99 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
+  ? /integration/api/v2/organizations/{organization_identifier_value}/integration-sessions/
+  : get:
+      tags: *lya_health_api
+      summary: List Integration Sessions
+      operationId: list_integration_sessions
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            description: Page number
+            default: 1
+            title: Page
+          description: Page number
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+            description: Page size
+            default: 50
+            title: Size
+          description: Page size
+        - name: order_by
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Order By
+        - name: created_at__gte
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: "null"
+            title: Created At Gte
+        - name: created_at__lte
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: date-time
+              - type: "null"
+            title: Created At Lte
+        - name: patient__uuid
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+                format: uuid
+              - type: "null"
+            title: Patient  Uuid
+        - name: patient__metadata_external_id
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Patient Metadata External Id
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListRetrieveIntegrationSessionSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
 components:
   schemas:
     HttpAdapterSchema:
@@ -1479,6 +1572,92 @@ components:
           type: string
           example: "organization:1:read_data,organization:1:write_data,organization:1:delete_data"
       title: TenantAuthorizationSchema
+    RetrieveIntegrationSessionSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        summarization:
+          anyOf:
+            - items:
+                type: object
+              type: array
+            - type: "null"
+          title: Summarization
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        finished_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+          title: Finished At
+        summarized_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+          title: Summarized At
+        patient:
+          anyOf:
+            - $ref: "#/components/schemas/RetrievePatientSchema"
+            - type: "null"
+        decrypted_transcript_value:
+          anyOf:
+            - type: string
+              const: ""
+            - type: string
+            - type: "null"
+          title: Decrypted Transcript Value
+      type: object
+      required:
+        - id
+        - summarization
+        - created_at
+        - finished_at
+        - summarized_at
+        - patient
+      title: RetrieveIntegrationSessionSchema
+    ListRetrieveIntegrationSessionSchema:
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/RetrieveIntegrationSessionSchema"
+          type: array
+          title: Items
+        total:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+          title: Total
+        page:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: "null"
+          title: Page
+        size:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: "null"
+          title: Size
+        pages:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+          title: Pages
+      type: object
+      required:
+        - items
+        - total
+        - page
+        - size
+      title: Page[RetrieveIntegrationSessionSchema]
   securitySchemes:
     HTTPBearer:
       type: http
