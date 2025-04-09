@@ -966,7 +966,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListRetrieveIntegrationSessionSchema"
+                $ref: "#/components/schemas/ListIntegrationSessionSchema"
         "422":
           description: Validation Error
           content:
@@ -1572,6 +1572,120 @@ components:
           type: string
           example: "organization:1:read_data,organization:1:write_data,organization:1:delete_data"
       title: TenantAuthorizationSchema
+    SmartAppCategoryEnum:
+      type: string
+      title: SmartAppCategoryEnum
+      enum: [real_time, summarize, both]
+    RetrieveSmartAppStatusSchema:
+      type: object
+      title: RetrieveSmartAppStatusSchema
+      properties:
+        slug:
+          type: string
+          title: Slug
+          examples: [visible]
+        name:
+          type: string
+          title: Name
+          examples: [Visível]
+    RetrieveSmartAppTypeSchema:
+      type: object
+      title: RetrieveSmartAppTypeSchema
+      properties:
+        slug:
+          type: string
+          title: Slug
+          examples: [text]
+        name:
+          type: string
+          title: Name
+          examples: [Texto]
+    RetrieveSmartAppSchema:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+          examples: [3b1eb3d8-fcfd-4574-9dea-3643f47306ed]
+        name:
+          type: string
+          title: Name
+          examples: [Meu Smart App]
+        prompt:
+          type: string
+          title: Prompt
+          examples: [Faça uma breve descrição da consulta.]
+        description:
+          anyOf:
+            - type: string
+            - type: null
+          title: Description
+          examples: [Lorem ipsum dolor sit amet]
+        input_transcription:
+          type: boolean
+          title: Input Transcription
+          examples: [true]
+        input_my_notes:
+          type: boolean
+          title: Input My Notes
+          default: true
+          examples: [true]
+        id:
+          type: integer
+          title: Id
+          examples: [1]
+        type:
+          $ref: "#/components/schemas/RetrieveSmartAppTypeSchema"
+        status:
+          $ref: "#/components/schemas/RetrieveSmartAppStatusSchema"
+        category:
+          $ref: "#/components/schemas/SmartAppCategoryEnum"
+        is_default:
+          anyOf:
+            - type: boolean
+            - type: null
+          title: Is Default
+          examples: [false]
+        copied_from_id:
+          anyOf:
+            - type: integer
+            - type: null
+          title: Copied From Id
+        dirty_copy_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: null
+          title: Dirty Copy At
+        metrics_bucket:
+          anyOf:
+            - type: object
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      title: RetrieveSmartAppSchema
+    RetrieveSummarizationResult:
+      type: object
+      properties:
+        result:
+          type: string
+          title: Result
+          examples: Resultado da sumarização
+        smart_app:
+          $ref: "#/components/schemas/RetrieveSmartAppSchema"
+          title: Smart App
+          examples: 0
+        possition:
+          type: integer
+          title: Possition
+          examples: 0
+      title: RetrieveSummarizationResult
     RetrieveIntegrationSessionSchema:
       properties:
         id:
@@ -1580,7 +1694,7 @@ components:
         summarization:
           anyOf:
             - items:
-                type: object
+                $ref: "#/components/schemas/RetrieveSummarizationResult"
               type: array
             - type: "null"
           title: Summarization
@@ -1620,7 +1734,7 @@ components:
         - summarized_at
         - patient
       title: RetrieveIntegrationSessionSchema
-    ListRetrieveIntegrationSessionSchema:
+    ListIntegrationSessionSchema:
       properties:
         items:
           items:
