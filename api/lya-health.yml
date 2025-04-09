@@ -1676,15 +1676,14 @@ components:
         result:
           type: string
           title: Result
-          examples: Resultado da sumarização
+          examples: [Resultado da sumarização]
         smart_app:
           $ref: "#/components/schemas/RetrieveSmartAppSchema"
           title: Smart App
-          examples: 0
         possition:
           type: integer
           title: Possition
-          examples: 0
+          examples: [0]
       title: RetrieveSummarizationResult
     RetrieveIntegrationSessionSchema:
       properties:
