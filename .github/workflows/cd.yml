@@ -13,8 +13,6 @@ jobs:
       - uses: tiagovrtr/actions-pipenv@v1
         with:
           pipenv-version: "2024.4.1"
-      - run: pyenv versions || true
-      - run: python --version
       - run: pipenv install
       - run: pipenv run mkdocs build
       - uses: peaceiris/actions-gh-pages@v4
