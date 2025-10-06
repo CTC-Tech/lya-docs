@@ -1738,8 +1738,18 @@ components:
           title: Integration callback URL
       type: object
       required:
-        - url
+        - integration_callback_url
       title: UpdateOrganizationIntegrationSchema
+    RetrieveOrganizationIntegrationSchema:
+      properties:
+        id:
+          type: integer
+          title: Organization ID
+        integration_callback_url:
+          type: string
+          title: Integration callback URL
+      type: object
+      title: RetrieveOrganizationIntegrationSchema
   securitySchemes:
     HTTPBearer:
       type: http
