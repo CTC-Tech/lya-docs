@@ -1161,12 +1161,14 @@ components:
           anyOf:
             - type: integer
             - type: "null"
+          example: 100
           title: Height (cm)
         weight:
           anyOf:
             - type: number
               format: float
             - type: "null"
+          example: 80.5
           title: Weight (kg)
       type: object
       required:
@@ -1364,12 +1366,14 @@ components:
           anyOf:
             - type: integer
             - type: "null"
+          example: 100
           title: Height (cm)
         weight:
           anyOf:
             - type: number
               format: float
             - type: "null"
+          example: 80.5
           title: Weight (kg)
       type: object
       required:
@@ -1469,12 +1473,14 @@ components:
           anyOf:
             - type: integer
             - type: "null"
+          example: 100
           title: Height (cm)
         weight:
           anyOf:
             - type: number
               format: float
             - type: "null"
+          example: 80.5
           title: Weight (kg)
       type: object
       title: UpdatePatientSchema
