@@ -1137,6 +1137,37 @@ components:
             - type: string
             - type: "null"
           title: Metadata External Id
+        sector:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Sector
+        external_sector_id:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: External Sector ID
+        phone_number:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Phone Number
+        birth:
+          anyOf:
+            - type: date
+            - type: "null"
+          title: Birth
+        height:
+          anyOf:
+            - type: integer
+            - type: "null"
+          title: Height (cm)
+        weight:
+          anyOf:
+            - type: number
+              format: float
+            - type: "null"
+          title: Weight (kg)
       type: object
       required:
         - name
@@ -1309,6 +1340,37 @@ components:
               format: date-time
             - type: "null"
           title: Deleted At
+        sector:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Sector
+        external_sector_id:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: External Sector ID
+        phone_number:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Phone Number
+        birth:
+          anyOf:
+            - type: date
+            - type: "null"
+          title: Birth
+        height:
+          anyOf:
+            - type: integer
+            - type: "null"
+          title: Height (cm)
+        weight:
+          anyOf:
+            - type: number
+              format: float
+            - type: "null"
+          title: Weight (kg)
       type: object
       required:
         - id
@@ -1383,6 +1445,37 @@ components:
             - type: string
             - type: "null"
           title: Metadata External Id
+        sector:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Sector
+        external_sector_id:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: External Sector ID
+        phone_number:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Phone Number
+        birth:
+          anyOf:
+            - type: date
+            - type: "null"
+          title: Birth
+        height:
+          anyOf:
+            - type: integer
+            - type: "null"
+          title: Height (cm)
+        weight:
+          anyOf:
+            - type: number
+              format: float
+            - type: "null"
+          title: Weight (kg)
       type: object
       title: UpdatePatientSchema
     UpdatePatientResourcesSchema:
