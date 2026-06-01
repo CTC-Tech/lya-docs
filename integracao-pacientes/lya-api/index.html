@@ -12,7 +12,7 @@
         <link rel="prev" href="../lya-patients/">
       
       
-        <link rel="next" href="../../api/">
+        <link rel="next" href="../operacoes-em-lote/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -181,6 +181,8 @@
       
         
           
+        
+      
         
       
         
@@ -360,6 +362,66 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#endpoints-disponiveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoints Disponíveis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoints Disponíveis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ator-autenticado" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ator autenticado
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pacientes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pacientes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources-fhir" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources (FHIR)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credenciais-de-tenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credenciais de Tenant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sessoes-e-configuracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sessões e Configuração
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validacao-de-autenticacao" class="md-nav__link">
     <span class="md-ellipsis">
       Validação de autenticação
@@ -396,6 +458,28 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operacoes-em-lote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operações em Lote
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -465,6 +549,66 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#endpoints-disponiveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoints Disponíveis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoints Disponíveis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ator-autenticado" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ator autenticado
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pacientes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pacientes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources-fhir" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources (FHIR)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credenciais-de-tenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credenciais de Tenant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sessoes-e-configuracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sessões e Configuração
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validacao-de-autenticacao" class="md-nav__link">
     <span class="md-ellipsis">
       Validação de autenticação
@@ -523,8 +667,193 @@
 <li><strong>Versão da API:</strong> v2</li>
 <li><strong>Status da API:</strong> Ativa</li>
 </ul>
+<h2 id="endpoints-disponiveis">Endpoints Disponíveis</h2>
+<h3 id="ator-autenticado">Ator autenticado</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/actors/current/</code></td>
+<td>Identifica o ator autenticado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pacientes">Pacientes</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/patients/</code></td>
+<td>Lista pacientes (paginado)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/patients/</code></td>
+<td>Cadastra um paciente</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/patients/bulk/</code></td>
+<td>Cadastra até 300 pacientes em lote</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/patients/{uuid}/</code></td>
+<td>Busca um paciente</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/patients/{uuid}/</code></td>
+<td>Atualiza um paciente</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/patients/{uuid}/</code></td>
+<td>Remove um paciente (soft delete)</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/patients/bulk/</code></td>
+<td>Atualiza até 300 pacientes em lote</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/patients/bulk/</code></td>
+<td>Remove até 300 pacientes em lote</td>
+</tr>
+</tbody>
+</table>
+<h3 id="resources-fhir">Resources (FHIR)</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/patients/resources/</code></td>
+<td>Lista recursos de todos os pacientes</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/patients/{id}/resources/</code></td>
+<td>Vincula um recurso FHIR</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/patients/resources/bulk/</code></td>
+<td>Vincula até 300 recursos em lote</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/patients/{id}/resources/{rid}/</code></td>
+<td>Busca um recurso</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/patients/{id}/resources/{rid}/</code></td>
+<td>Atualiza um recurso</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/patients/{id}/resources/{rid}/</code></td>
+<td>Remove um recurso</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/patients/resources/bulk/</code></td>
+<td>Atualiza até 300 recursos em lote</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/patients/resources/bulk/</code></td>
+<td>Remove até 300 recursos em lote</td>
+</tr>
+</tbody>
+</table>
+<h3 id="credenciais-de-tenant">Credenciais de Tenant</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/tenant-credentials/</code></td>
+<td>Lista credenciais</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/tenant-credentials/</code></td>
+<td>Cria credencial</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/tenant-credentials/{id}/</code></td>
+<td>Busca credencial</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/tenant-credentials/{id}/</code></td>
+<td>Atualiza credencial</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/tenant-credentials/{id}/</code></td>
+<td>Remove credencial</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sessoes-e-configuracao">Sessões e Configuração</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/integration-sessions/</code></td>
+<td>Lista sessões com sumarização</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/integration-callback-url/</code></td>
+<td>Define URL de callback</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota sobre campos obrigatórios:</strong> ao criar um paciente via integração (<code>POST /patients/</code> e <code>POST /patients/bulk/</code>), os campos <code>document</code>, <code>document_type</code>, <code>metadata_external_id</code> e <code>birth</code> são <strong>obrigatórios</strong>.</p>
+<p><strong>Nota sobre IDs numéricos:</strong> nos endpoints de resources, <code>{id}</code> e <code>{rid}</code> são IDs numéricos (campo <code>id</code>), não UUIDs.</p>
+</blockquote>
 <h2 id="validacao-de-autenticacao"><strong>Validação de autenticação</strong></h2>
-<p>Para verificar a validade do token de acesso, utilize o endpoint abaixo. Essa verificação permite garantir que o token está ativo e autorizado para acessar os serviços da API.</p>
+<p>Para verificar a validade do token de acesso, utilize o endpoint abaixo.</p>
 <h4 id="endpoint">Endpoint</h4>
 <p>Método: <code>GET</code>
 Rota: <code>/actors/current/</code></p>
@@ -532,7 +861,7 @@ Rota: <code>/actors/current/</code></p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span><span class="s2">&quot;https://api.lyahealth.com.br/integration/api/v2/actors/current/&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">     </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer SEU_TOKEN_AQUI&quot;</span>
 </code></pre></div>
-<p>Se o token for válido, a resposta será um código de sucesso com as informações associadas ao acesso. Caso contrário, a resposta indicará um erro de autenticação.</p>
+<p>Se o token for válido, a resposta retorna o tipo do ator e seus principals. Caso contrário, retorna erro de autenticação.</p>
 
 
 
