@@ -1271,6 +1271,440 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
+
+  /integration/api/v2/organizations/{organization_identifier_value}/surgical-procedures/:
+    get:
+      tags: *lya_health_api
+      summary: List Surgical Procedures
+      operationId: list_organization_surgical_procedures
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            title: Page
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+            default: 50
+            title: Size
+        - name: search
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Search
+          description: Busca textual em surgery_description e surgery_code
+        - name: surgery_code__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Surgery Code
+        - name: surgery_description__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Surgery Description
+        - name: sigtap_code__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: SIGTAP Code
+        - name: sia_procedure_code__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: SIA Procedure Code
+        - name: sih_procedure_code__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: SIH Procedure Code
+        - name: is_active
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: boolean
+              - type: "null"
+            default: true
+            title: Is Active
+        - name: order_by
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  type: string
+              - type: "null"
+            title: Order By
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageRetrieveSurgicalProcedureSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    post:
+      tags: *lya_health_api
+      summary: Create Surgical Procedure
+      operationId: create_organization_surgical_procedure
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSurgicalProcedureSchema"
+      responses:
+        "201":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveSurgicalProcedureSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
+  ? /integration/api/v2/organizations/{organization_identifier_value}/surgical-procedures/{surgical_procedure_id}/
+  : patch:
+      tags: *lya_health_api
+      summary: Update Surgical Procedure
+      operationId: update_organization_surgical_procedure
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: surgical_procedure_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Surgical Procedure ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSurgicalProcedureSchema"
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveSurgicalProcedureSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    delete:
+      tags: *lya_health_api
+      summary: Delete Surgical Procedure
+      operationId: delete_organization_surgical_procedure
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: surgical_procedure_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Surgical Procedure ID
+      responses:
+        "204":
+          description: Successful Response (no content)
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
+  /integration/api/v2/organizations/{organization_identifier_value}/surgical-providers/:
+    get:
+      tags: *lya_health_api
+      summary: List Surgical Providers
+      operationId: list_organization_surgical_providers
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            title: Page
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            minimum: 1
+            default: 50
+            title: Size
+        - name: provider_code__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Provider Code
+        - name: provider_name__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Provider Name
+        - name: crm_number__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: CRM Number
+        - name: activity_code__ilike
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: "null"
+            title: Activity Code
+        - name: activity_type
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: "#/components/schemas/ActivityTypeEnum"
+              - type: "null"
+            title: Activity Type
+        - name: is_active
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: boolean
+              - type: "null"
+            default: true
+            title: Is Active
+        - name: order_by
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  type: string
+              - type: "null"
+            title: Order By
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageRetrieveSurgicalProviderSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    post:
+      tags: *lya_health_api
+      summary: Create Surgical Provider
+      operationId: create_organization_surgical_provider
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSurgicalProviderSchema"
+      responses:
+        "201":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveSurgicalProviderSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
+  ? /integration/api/v2/organizations/{organization_identifier_value}/surgical-providers/{surgical_provider_id}/
+  : patch:
+      tags: *lya_health_api
+      summary: Update Surgical Provider
+      operationId: update_organization_surgical_provider
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: surgical_provider_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Surgical Provider ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSurgicalProviderSchema"
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveSurgicalProviderSchema"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    delete:
+      tags: *lya_health_api
+      summary: Delete Surgical Provider
+      operationId: delete_organization_surgical_provider
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Organization Identifier Value
+        - name: surgical_provider_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Surgical Provider ID
+      responses:
+        "204":
+          description: Successful Response (no content)
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
 components:
   schemas:
     HttpAdapterSchema:
@@ -2620,6 +3054,329 @@ components:
           title: Integration callback URL
       type: object
       title: RetrieveOrganizationIntegrationSchema
+    ActivityTypeEnum:
+      type: string
+      enum:
+        - surgeon
+        - anesthesiologist
+      title: ActivityTypeEnum
+
+    CreateSurgicalProcedureSchema:
+      properties:
+        surgery_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Surgery Code
+        surgery_description:
+          type: string
+          title: Surgery Description
+        sigtap_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIGTAP Code
+        sia_procedure_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIA Procedure Code
+        sih_procedure_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIH Procedure Code
+        is_active:
+          type: boolean
+          default: true
+          title: Is Active
+      type: object
+      required:
+        - surgery_description
+      title: CreateSurgicalProcedureSchema
+
+    UpdateSurgicalProcedureSchema:
+      properties:
+        surgery_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Surgery Code
+        surgery_description:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Surgery Description
+        sigtap_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIGTAP Code
+        sia_procedure_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIA Procedure Code
+        sih_procedure_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIH Procedure Code
+        is_active:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          title: Is Active
+      type: object
+      title: UpdateSurgicalProcedureSchema
+
+    RetrieveSurgicalProcedureSchema:
+      properties:
+        id:
+          type: integer
+          title: ID
+        surgery_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Surgery Code
+        surgery_description:
+          type: string
+          title: Surgery Description
+        sigtap_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIGTAP Code
+        sia_procedure_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIA Procedure Code
+        sih_procedure_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: SIH Procedure Code
+        is_active:
+          type: boolean
+          title: Is Active
+        organization_id:
+          type: integer
+          title: Organization ID
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+        - id
+        - surgery_description
+        - is_active
+        - organization_id
+        - created_at
+        - updated_at
+      title: RetrieveSurgicalProcedureSchema
+
+    PageRetrieveSurgicalProcedureSchema:
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/RetrieveSurgicalProcedureSchema"
+          type: array
+          title: Items
+        total:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+          title: Total
+        page:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: "null"
+          title: Page
+        size:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: "null"
+          title: Size
+        pages:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+          title: Pages
+      type: object
+      required:
+        - items
+        - total
+        - page
+        - size
+      title: Page[RetrieveSurgicalProcedureSchema]
+
+    CreateSurgicalProviderSchema:
+      properties:
+        provider_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Provider Code
+        provider_name:
+          type: string
+          title: Provider Name
+        crm_number:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: CRM Number
+        activity_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Activity Code
+        activity_type:
+          $ref: "#/components/schemas/ActivityTypeEnum"
+        is_active:
+          type: boolean
+          default: true
+          title: Is Active
+      type: object
+      required:
+        - provider_name
+        - activity_type
+      title: CreateSurgicalProviderSchema
+
+    UpdateSurgicalProviderSchema:
+      properties:
+        provider_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Provider Code
+        provider_name:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Provider Name
+        crm_number:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: CRM Number
+        activity_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Activity Code
+        activity_type:
+          anyOf:
+            - $ref: "#/components/schemas/ActivityTypeEnum"
+            - type: "null"
+          title: Activity Type
+        is_active:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          title: Is Active
+      type: object
+      title: UpdateSurgicalProviderSchema
+
+    RetrieveSurgicalProviderSchema:
+      properties:
+        id:
+          type: integer
+          title: ID
+        provider_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Provider Code
+        provider_name:
+          type: string
+          title: Provider Name
+        crm_number:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: CRM Number
+        activity_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Activity Code
+        activity_type:
+          $ref: "#/components/schemas/ActivityTypeEnum"
+        is_active:
+          type: boolean
+          title: Is Active
+        organization_id:
+          type: integer
+          title: Organization ID
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+        - id
+        - provider_name
+        - activity_type
+        - is_active
+        - organization_id
+        - created_at
+        - updated_at
+      title: RetrieveSurgicalProviderSchema
+
+    PageRetrieveSurgicalProviderSchema:
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/RetrieveSurgicalProviderSchema"
+          type: array
+          title: Items
+        total:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+          title: Total
+        page:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: "null"
+          title: Page
+        size:
+          anyOf:
+            - type: integer
+              minimum: 1
+            - type: "null"
+          title: Size
+        pages:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: "null"
+          title: Pages
+      type: object
+      required:
+        - items
+        - total
+        - page
+        - size
+      title: Page[RetrieveSurgicalProviderSchema]
+
   securitySchemes:
     HTTPBearer:
       type: http
