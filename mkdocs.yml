@@ -23,4 +23,5 @@ nav:
       - integracao-pacientes/lya-tenants.md
       - integracao-pacientes/lya-patients.md
       - integracao-pacientes/lya-api.md
+      - integracao-pacientes/operacoes-em-lote.md
   - api.md

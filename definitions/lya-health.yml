@@ -10,6 +10,16 @@ servers:
   - url: https://api.lyahealth.com.br
     description: Servidor de Produção
 
+tags:
+  - name: Lya Tenants
+    description: Validação de acesso e autenticação de tenants.
+  - name: Lya Patients
+    description: Configuração dos repositórios FHIR e adaptadores de autenticação usados pela Lya para buscar dados dos pacientes.
+  - name: Lya Health API
+    description: Gerenciamento de pacientes, resources FHIR, credenciais de tenant e sessões. Use para operações em registros individuais.
+  - name: Lya Health API — Operações em Lote
+    description: Criação, atualização e remoção de até 300 registros por requisição. Cada item é processado de forma independente.
+
 paths:
   /tenants/validate/:
     get:
@@ -288,7 +298,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePatientSchema"
+              $ref: "#/components/schemas/CreateOrganizationPatientSchema"
       responses:
         "201":
           description: Successful Response
@@ -407,6 +417,152 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/external/{metadata_external_id}/:
+    get:
+      tags: *lya_health_api
+      summary: Retrieve Patient by External ID
+      operationId: retrieve_organization_patient_external_id
+      description: Busca um paciente pelo seu `metadata_external_id` (ID do sistema legado).
+      security:
+        - HTTPBearer: []
+      parameters:
+        - name: organization_identifier_value
+          in: path
+          required: true
+          schema:
+            anyOf:
+              - type: string
+              - type: integer
+            title: Identifier Value
+        - name: metadata_external_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Metadata External Id
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrievePatientSchema"
+        "404":
+          description: Paciente não encontrado
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/bulk/:
+    parameters:
+      - name: organization_identifier_value
+        in: path
+        required: true
+        schema:
+          anyOf:
+            - type: string
+            - type: integer
+          title: Identifier Value
+    post:
+      tags:
+        - Lya Health API — Operações em Lote
+      summary: Bulk Create Patients
+      operationId: create_current_organization_patients_bulk
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CreateOrganizationPatientSchema"
+              minItems: 1
+              maxItems: 300
+      responses:
+        "201":
+          description: Lista de resultados individuais por paciente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BulkCreatePatientResponseItem"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    patch:
+      tags:
+        - Lya Health API — Operações em Lote
+      summary: Bulk Update Patients
+      operationId: update_organization_patients_bulk
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/UpdatePatientBulkItemSchema"
+              minItems: 1
+              maxItems: 300
+      responses:
+        "200":
+          description: Lista de resultados individuais por paciente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BulkUpdatePatientResponseItem"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+        - Lya Health API — Operações em Lote
+      summary: Bulk Delete Patients
+      operationId: delete_organization_patients_bulk
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/DeletePatientBulkItemSchema"
+              minItems: 1
+              maxItems: 300
+      responses:
+        "200":
+          description: Lista de resultados individuais por paciente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BulkDeletePatientResponseItem"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
   ? /integration/api/v2/organizations/{organization_identifier_value}/tenant-credentials/
   : get:
       tags: *lya_health_api
@@ -702,6 +858,113 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
+  /integration/api/v2/organizations/{organization_identifier_value}/patients/resources/bulk/:
+    parameters:
+      - name: organization_identifier_value
+        in: path
+        required: true
+        schema:
+          anyOf:
+            - type: string
+            - type: integer
+          title: Identifier Value
+    post:
+      tags:
+        - Lya Health API — Operações em Lote
+      summary: Bulk Create Patient Resources
+      operationId: create_patient_resources_bulk
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CreatePatientResourceBulkItemSchema"
+              minItems: 1
+              maxItems: 300
+      responses:
+        "201":
+          description: Lista de resultados individuais por resource
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BulkCreatePatientResourceResponseItem"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    patch:
+      tags:
+        - Lya Health API — Operações em Lote
+      summary: Bulk Update Patient Resources
+      operationId: update_patient_resources_bulk
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/UpdatePatientResourceBulkItemSchema"
+              minItems: 1
+              maxItems: 300
+      responses:
+        "200":
+          description: Lista de resultados individuais por resource
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BulkUpdatePatientResourceResponseItem"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+        - Lya Health API — Operações em Lote
+      summary: Bulk Delete Patient Resources
+      operationId: delete_patient_resources_bulk
+      security:
+        - HTTPBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/DeletePatientResourceBulkItemSchema"
+              minItems: 1
+              maxItems: 300
+      responses:
+        "200":
+          description: Lista de resultados individuais por resource
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BulkDeletePatientResourceResponseItem"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+
   ? /integration/api/v2/organizations/{organization_identifier_value}/patients/{patient_identifier_value}/resources/
   : post:
       tags: *lya_health_api
@@ -1154,26 +1417,233 @@ components:
           title: Phone Number
         birth:
           anyOf:
-            - type: date
+            - type: string
+              format: date
             - type: "null"
           title: Birth
         height:
           anyOf:
             - type: integer
             - type: "null"
-          example: 100
+          example: 170
           title: Height (cm)
         weight:
           anyOf:
             - type: number
               format: float
             - type: "null"
-          example: 80.5
+          example: 72.5
           title: Weight (kg)
+        is_integration:
+          type: boolean
+          default: true
+          title: Is Integration
+        consultation_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Consultation Code
+        consultation_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+          title: Consultation Date
+        filters:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/CreatePatientFilterSchema"
+            - type: "null"
+          title: Filters
       type: object
       required:
         - name
       title: CreatePatientSchema
+    CreateOrganizationPatientSchema:
+      description: Schema usado pela integração. Os campos document, document_type, metadata_external_id e birth são obrigatórios.
+      allOf:
+        - $ref: "#/components/schemas/CreatePatientSchema"
+        - type: object
+          required:
+            - name
+            - document
+            - document_type
+            - metadata_external_id
+            - birth
+          properties:
+            document:
+              type: string
+              title: Document
+            document_type:
+              $ref: "#/components/schemas/PatientDocumentTypeEnum"
+            metadata_external_id:
+              type: string
+              title: Metadata External Id
+            birth:
+              type: string
+              format: date
+              title: Birth
+      title: CreateOrganizationPatientSchema
+    CreatePatientProcedureSchema:
+      properties:
+        surgery_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Surgery Code
+        surgery_description:
+          type: string
+          title: Surgery Description
+        is_primary:
+          type: boolean
+          default: false
+          title: Is Primary
+      type: object
+      required:
+        - surgery_description
+      title: CreatePatientProcedureSchema
+    CreatePatientFilterValueSchema:
+      properties:
+        value:
+          type: string
+          title: Value
+        title:
+          type: string
+          title: Title
+        procedures:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/CreatePatientProcedureSchema"
+            - type: "null"
+          title: Procedures
+      type: object
+      required:
+        - value
+        - title
+      title: CreatePatientFilterValueSchema
+    CreatePatientFilterSchema:
+      properties:
+        name:
+          type: string
+          title: Name
+        query_parameter:
+          type: string
+          title: Query Parameter
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreatePatientFilterValueSchema"
+          title: Values
+      type: object
+      required:
+        - name
+        - query_parameter
+        - values
+      title: CreatePatientFilterSchema
+    PatientProcedureSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        surgery_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Surgery Code
+        surgery_description:
+          type: string
+          title: Surgery Description
+        is_primary:
+          type: boolean
+          title: Is Primary
+      type: object
+      required:
+        - id
+        - surgery_description
+        - is_primary
+      title: PatientProcedureSchema
+    RetrievePatientFilterValueSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        value:
+          type: string
+          title: Value
+        title:
+          type: string
+          title: Title
+        procedures:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/PatientProcedureSchema"
+            - type: "null"
+          title: Procedures
+      type: object
+      required:
+        - id
+        - value
+        - title
+      title: RetrievePatientFilterValueSchema
+    RetrievePatientFilterSchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          type: string
+          title: Name
+        slug:
+          type: string
+          title: Slug
+        query_parameter:
+          type: string
+          title: Query Parameter
+        values:
+          type: array
+          items:
+            $ref: "#/components/schemas/RetrievePatientFilterValueSchema"
+          title: Values
+      type: object
+      required:
+        - id
+        - name
+        - slug
+        - query_parameter
+        - values
+      title: RetrievePatientFilterSchema
+    PatientSessionSummarySchema:
+      properties:
+        id:
+          type: integer
+          title: Id
+        name:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        finished_at:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+          title: Finished At
+        assistant_id:
+          type: integer
+          title: Assistant Id
+      type: object
+      required:
+        - id
+        - created_at
+        - assistant_id
+      title: PatientSessionSummarySchema
     CreatePatientResourcesSchema:
       properties:
         url:
@@ -1200,11 +1670,29 @@ components:
         - tenant_slug
         - secret_key
       title: CreateTenantCredentialSchema
+    ListPatientItemSchema:
+      description: Extensão de RetrievePatientSchema com campos de última sessão, retornada no GET list.
+      allOf:
+        - $ref: "#/components/schemas/RetrievePatientSchema"
+        - type: object
+          properties:
+            last_session_id:
+              anyOf:
+                - type: integer
+                - type: "null"
+              title: Last Session Id
+            last_session_created_at:
+              anyOf:
+                - type: string
+                  format: date-time
+                - type: "null"
+              title: Last Session Created At
+      title: ListPatientItemSchema
     ListPatientSchema:
       properties:
         items:
           items:
-            $ref: "#/components/schemas/RetrievePatientSchema"
+            $ref: "#/components/schemas/ListPatientItemSchema"
           type: array
           title: Items
         total:
@@ -1359,33 +1847,58 @@ components:
           title: Phone Number
         birth:
           anyOf:
-            - type: date
+            - type: string
+              format: date
             - type: "null"
           title: Birth
         height:
           anyOf:
             - type: integer
             - type: "null"
-          example: 100
+          example: 170
           title: Height (cm)
         weight:
           anyOf:
             - type: number
               format: float
             - type: "null"
-          example: 80.5
+          example: 72.5
           title: Weight (kg)
+        is_integration:
+          type: boolean
+          title: Is Integration
+        consultation_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Consultation Code
+        consultation_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+          title: Consultation Date
+        filters:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/RetrievePatientFilterSchema"
+            - type: "null"
+          title: Filters
+        last_sessions:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/PatientSessionSummarySchema"
+            - type: "null"
+          title: Last Sessions
       type: object
       required:
         - id
         - uuid
         - name
-        - document
-        - document_type
-        - metadata_external_id
         - created_at
         - updated_at
-        - deleted_at
       title: RetrievePatientSchema
     RetrievePatientResourcesSchema:
       properties:
@@ -1466,24 +1979,264 @@ components:
           title: Phone Number
         birth:
           anyOf:
-            - type: date
+            - type: string
+              format: date
             - type: "null"
           title: Birth
         height:
           anyOf:
             - type: integer
             - type: "null"
-          example: 100
+          example: 170
           title: Height (cm)
         weight:
           anyOf:
             - type: number
               format: float
             - type: "null"
-          example: 80.5
+          example: 72.5
           title: Weight (kg)
+        is_integration:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          title: Is Integration
+        consultation_code:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Consultation Code
+        consultation_date:
+          anyOf:
+            - type: string
+              format: date-time
+            - type: "null"
+          title: Consultation Date
+        filters:
+          anyOf:
+            - type: array
+              items:
+                $ref: "#/components/schemas/CreatePatientFilterSchema"
+            - type: "null"
+          title: Filters
       type: object
       title: UpdatePatientSchema
+    UpdatePatientBulkItemSchema:
+      description: Igual ao UpdatePatientSchema mas com uuid obrigatório para identificar o paciente.
+      allOf:
+        - $ref: "#/components/schemas/UpdatePatientSchema"
+        - type: object
+          required:
+            - uuid
+          properties:
+            uuid:
+              type: string
+              format: uuid
+              title: Uuid
+      title: UpdatePatientBulkItemSchema
+    DeletePatientBulkItemSchema:
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+      type: object
+      required:
+        - uuid
+      title: DeletePatientBulkItemSchema
+    BulkCreatePatientResponseItem:
+      properties:
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - ERROR
+          title: Status
+        data:
+          anyOf:
+            - $ref: "#/components/schemas/RetrievePatientSchema"
+            - type: "null"
+        error:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Error
+      type: object
+      required:
+        - status
+      title: BulkCreatePatientResponseItem
+    BulkUpdatePatientResponseItem:
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - ERROR
+          title: Status
+        data:
+          anyOf:
+            - $ref: "#/components/schemas/RetrievePatientSchema"
+            - type: "null"
+        error:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Error
+      type: object
+      required:
+        - uuid
+        - status
+      title: BulkUpdatePatientResponseItem
+    BulkDeletePatientResponseItem:
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - ERROR
+          title: Status
+        error:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Error
+      type: object
+      required:
+        - uuid
+        - status
+      title: BulkDeletePatientResponseItem
+    CreatePatientResourceBulkItemSchema:
+      properties:
+        patient_id:
+          type: integer
+          title: Patient Id
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+        - patient_id
+        - url
+      title: CreatePatientResourceBulkItemSchema
+    BulkCreatePatientResourceResponseItem:
+      properties:
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - ERROR
+          title: Status
+        data:
+          anyOf:
+            - $ref: "#/components/schemas/RetrievePatientResourcesSchema"
+            - type: "null"
+        error:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Error
+      type: object
+      required:
+        - status
+      title: BulkCreatePatientResourceResponseItem
+    UpdatePatientResourceBulkItemSchema:
+      properties:
+        patient_id:
+          type: integer
+          title: Patient Id
+        resource_id:
+          type: integer
+          title: Resource Id
+        url:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Url
+      type: object
+      required:
+        - patient_id
+        - resource_id
+      title: UpdatePatientResourceBulkItemSchema
+    BulkUpdatePatientResourceResponseItem:
+      properties:
+        patient_id:
+          type: integer
+          title: Patient Id
+        resource_id:
+          type: integer
+          title: Resource Id
+        url:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Url
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - ERROR
+          title: Status
+        data:
+          anyOf:
+            - $ref: "#/components/schemas/RetrievePatientResourcesSchema"
+            - type: "null"
+        error:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Error
+      type: object
+      required:
+        - patient_id
+        - resource_id
+        - status
+      title: BulkUpdatePatientResourceResponseItem
+    DeletePatientResourceBulkItemSchema:
+      properties:
+        patient_id:
+          type: integer
+          title: Patient Id
+        resource_id:
+          type: integer
+          title: Resource Id
+      type: object
+      required:
+        - patient_id
+        - resource_id
+      title: DeletePatientResourceBulkItemSchema
+    BulkDeletePatientResourceResponseItem:
+      properties:
+        patient_id:
+          type: integer
+          title: Patient Id
+        resource_id:
+          type: integer
+          title: Resource Id
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - ERROR
+          title: Status
+        error:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Error
+      type: object
+      required:
+        - patient_id
+        - resource_id
+        - status
+      title: BulkDeletePatientResourceResponseItem
     UpdatePatientResourcesSchema:
       properties:
         url:
@@ -1492,8 +2245,6 @@ components:
             - type: "null"
           title: Url
       type: object
-      required:
-        - url
       title: UpdatePatientResourcesSchema
     UpdateTenantCredentialSchema:
       properties:
@@ -1733,16 +2484,40 @@ components:
         type:
           $ref: "#/components/schemas/RetrieveSmartAppTypeSchema"
       title: RetrieveSmartAppSchema
+    RetrieveSmartAppVersionIntegrationSchema:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          title: Uuid
+        name:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Name
+        type:
+          anyOf:
+            - $ref: "#/components/schemas/RetrieveSmartAppTypeSchema"
+            - type: "null"
+      title: RetrieveSmartAppVersionIntegrationSchema
     RetrieveSummarizationResult:
       type: object
       properties:
+        id:
+          type: integer
+          title: Id
+        smart_app_version:
+          $ref: "#/components/schemas/RetrieveSmartAppVersionIntegrationSchema"
         result:
-          type: string
+          anyOf:
+            - type: object
+              title: Result (JSON parseado)
+            - type: "null"
           title: Result
-          examples: [Resultado da sumarização]
-        smart_app:
-          $ref: "#/components/schemas/RetrieveSmartAppSchema"
-          title: Smart App
+      required:
+        - id
+        - smart_app_version
       title: RetrieveSummarizationResult
     RetrieveIntegrationSessionSchema:
       properties:
@@ -1786,11 +2561,7 @@ components:
       type: object
       required:
         - id
-        - summarization
         - created_at
-        - finished_at
-        - summarized_at
-        - patient
       title: RetrieveIntegrationSessionSchema
     ListIntegrationSessionSchema:
       properties:
