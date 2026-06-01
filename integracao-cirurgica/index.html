@@ -1,0 +1,1015 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../integracao-pacientes/operacoes-em-lote/">
+      
+      
+        <link rel="next" href="../api/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.8">
+    
+    
+      
+        <title>Integração Cirúrgica - Lya Health Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#integracao-cirurgica" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Lya Health Docs" class="md-header__button md-logo" aria-label="Lya Health Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lya Health Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Integração Cirúrgica
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lya Health Docs" class="md-nav__button md-logo" aria-label="Lya Health Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Lya Health Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sobre
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../integracao-pacientes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Integração de pacientes
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Integração de pacientes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integracao-pacientes/autenticacao/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Autenticação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integracao-pacientes/lya-tenants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lya Tenants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integracao-pacientes/lya-patients/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lya Patients
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integracao-pacientes/lya-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lya API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integracao-pacientes/operacoes-em-lote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operações em Lote
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  <span class="md-ellipsis">
+    Integração Cirúrgica
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Integração Cirúrgica
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Definição da API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Introdução
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-informacoes-gerais" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Informações Gerais
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-endpoints-disponiveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Endpoints Disponíveis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Endpoints Disponíveis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#procedimentos-cirurgicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Procedimentos Cirúrgicos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipe-cirurgica-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equipe Cirúrgica (Providers)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-procedimentos-cirurgicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Procedimentos Cirúrgicos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Procedimentos Cirúrgicos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cadastrar-procedimento" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Cadastrar Procedimento
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 Cadastrar Procedimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#campos-do-corpo-da-requisicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campos do corpo da requisição
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-requisicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemplo de requisição
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-resposta-201-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemplo de resposta (201 Created)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-atualizar-procedimento" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Atualizar Procedimento
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-desativar-procedimento" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Desativar Procedimento
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-equipe-cirurgica-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Equipe Cirúrgica (Providers)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Equipe Cirúrgica (Providers)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-cadastrar-membro" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Cadastrar Membro
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Cadastrar Membro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#campos-do-corpo-da-requisicao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campos do corpo da requisição
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity_type-valores-aceitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      activity_type — valores aceitos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-requisicao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemplo de requisição
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-resposta-201-created_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemplo de resposta (201 Created)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-atualizar-membro" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Atualizar Membro
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-desativar-membro" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Desativar Membro
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-definicao-completa-da-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Definição completa da API
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="integracao-cirurgica">Integração Cirúrgica</h1>
+<h2 id="1-introducao">1. Introdução</h2>
+<p>A API de Integração Cirúrgica permite que sistemas terceiros cadastrem e gerenciem os <strong>procedimentos cirúrgicos</strong> e <strong>equipes cirúrgicas (providers)</strong> da organização na plataforma Lya. Esses dados são utilizados durante as consultas para pré-popular os campos cirúrgicos da sessão.</p>
+<h2 id="2-informacoes-gerais">2. Informações Gerais</h2>
+<ul>
+<li><strong>Base URL (homologação):</strong> <a href="https://api.lya-health-hml.ctctech.link/integration/api/v2/">https://api.lya-health-hml.ctctech.link/integration/api/v2/</a></li>
+<li><strong>Base URL (produção):</strong> <a href="https://api.lyahealth.com.br/integration/api/v2/">https://api.lyahealth.com.br/integration/api/v2/</a></li>
+<li><strong>Formato de Respostas:</strong> JSON</li>
+<li><strong>Versão da API:</strong> v2</li>
+</ul>
+<h2 id="3-endpoints-disponiveis">3. Endpoints Disponíveis</h2>
+<h3 id="procedimentos-cirurgicos">Procedimentos Cirúrgicos</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/surgical-procedures/</code></td>
+<td>Lista procedimentos (paginado)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/surgical-procedures/</code></td>
+<td>Cadastra um procedimento</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/surgical-procedures/{id}/</code></td>
+<td>Atualiza um procedimento</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/surgical-procedures/{id}/</code></td>
+<td>Desativa um procedimento</td>
+</tr>
+</tbody>
+</table>
+<h3 id="equipe-cirurgica-providers">Equipe Cirúrgica (Providers)</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Rota</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/organizations/{org_id}/surgical-providers/</code></td>
+<td>Lista membros da equipe (paginado)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/organizations/{org_id}/surgical-providers/</code></td>
+<td>Cadastra um membro</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td><code>/organizations/{org_id}/surgical-providers/{id}/</code></td>
+<td>Atualiza um membro</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/organizations/{org_id}/surgical-providers/{id}/</code></td>
+<td>Desativa um membro</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota:</strong> O <code>DELETE</code> realiza <strong>desativação lógica</strong> (<code>is_active=false</code>), o registro não é removido do banco.</p>
+</blockquote>
+<h2 id="4-procedimentos-cirurgicos">4. Procedimentos Cirúrgicos</h2>
+<h3 id="41-cadastrar-procedimento">4.1 Cadastrar Procedimento</h3>
+<p><strong><code>POST /organizations/{org_id}/surgical-procedures/</code></strong></p>
+<h4 id="campos-do-corpo-da-requisicao">Campos do corpo da requisição</h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Obrigatório</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>surgery_description</code></td>
+<td>string</td>
+<td>✅</td>
+<td>Descrição do procedimento</td>
+</tr>
+<tr>
+<td><code>surgery_code</code></td>
+<td>string</td>
+<td>—</td>
+<td>Código interno do procedimento</td>
+</tr>
+<tr>
+<td><code>sigtap_code</code></td>
+<td>string</td>
+<td>—</td>
+<td>Código SIGTAP</td>
+</tr>
+<tr>
+<td><code>sia_procedure_code</code></td>
+<td>string</td>
+<td>—</td>
+<td>Código SIA</td>
+</tr>
+<tr>
+<td><code>sih_procedure_code</code></td>
+<td>string</td>
+<td>—</td>
+<td>Código SIH</td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>boolean</td>
+<td>—</td>
+<td>Padrão: <code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="exemplo-de-requisicao">Exemplo de requisição</h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;https://api.lyahealth.com.br/integration/api/v2/organizations/minha-org/surgical-procedures/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer SEU_TOKEN&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;surgery_description&quot;: &quot;Colecistectomia laparoscópica&quot;,</span>
+<span class="s1">    &quot;surgery_code&quot;: &quot;COL-001&quot;,</span>
+<span class="s1">    &quot;sigtap_code&quot;: &quot;0407010074&quot;</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<h4 id="exemplo-de-resposta-201-created">Exemplo de resposta (<code>201 Created</code>)</h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;surgery_description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Colecistectomia laparoscópica&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;surgery_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;COL-001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sigtap_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0407010074&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sia_procedure_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sih_procedure_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;organization_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-01T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-01T10:00:00Z&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="42-atualizar-procedimento">4.2 Atualizar Procedimento</h3>
+<p><strong><code>PATCH /organizations/{org_id}/surgical-procedures/{id}/</code></strong></p>
+<p>Todos os campos são opcionais. Apenas os campos enviados serão atualizados.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="s2">&quot;https://api.lyahealth.com.br/integration/api/v2/organizations/minha-org/surgical-procedures/1/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer SEU_TOKEN&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;sigtap_code&quot;: &quot;0407010099&quot;}&#39;</span>
+</code></pre></div>
+<h3 id="43-desativar-procedimento">4.3 Desativar Procedimento</h3>
+<p><strong><code>DELETE /organizations/{org_id}/surgical-procedures/{id}/</code></strong></p>
+<p>Retorna <code>204 No Content</code>. O procedimento é marcado como <code>is_active=false</code>.</p>
+<h2 id="5-equipe-cirurgica-providers">5. Equipe Cirúrgica (Providers)</h2>
+<h3 id="51-cadastrar-membro">5.1 Cadastrar Membro</h3>
+<p><strong><code>POST /organizations/{org_id}/surgical-providers/</code></strong></p>
+<h4 id="campos-do-corpo-da-requisicao_1">Campos do corpo da requisição</h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Obrigatório</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>provider_name</code></td>
+<td>string</td>
+<td>✅</td>
+<td>Nome do profissional</td>
+</tr>
+<tr>
+<td><code>activity_type</code></td>
+<td>string</td>
+<td>✅</td>
+<td><code>surgeon</code> ou <code>anesthesiologist</code></td>
+</tr>
+<tr>
+<td><code>provider_code</code></td>
+<td>string</td>
+<td>—</td>
+<td>Código interno</td>
+</tr>
+<tr>
+<td><code>crm_number</code></td>
+<td>string</td>
+<td>—</td>
+<td>Número do CRM</td>
+</tr>
+<tr>
+<td><code>activity_code</code></td>
+<td>string</td>
+<td>—</td>
+<td>Código de atividade</td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>boolean</td>
+<td>—</td>
+<td>Padrão: <code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="activity_type-valores-aceitos"><code>activity_type</code> — valores aceitos</h4>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>surgeon</code></td>
+<td>Cirurgião</td>
+</tr>
+<tr>
+<td><code>anesthesiologist</code></td>
+<td>Anestesiologista</td>
+</tr>
+</tbody>
+</table>
+<h4 id="exemplo-de-requisicao_1">Exemplo de requisição</h4>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;https://api.lyahealth.com.br/integration/api/v2/organizations/minha-org/surgical-providers/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer SEU_TOKEN&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;provider_name&quot;: &quot;Dr. João Silva&quot;,</span>
+<span class="s1">    &quot;activity_type&quot;: &quot;surgeon&quot;,</span>
+<span class="s1">    &quot;crm_number&quot;: &quot;CRM/SP 123456&quot;</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+<h4 id="exemplo-de-resposta-201-created_1">Exemplo de resposta (<code>201 Created</code>)</h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;provider_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dr. João Silva&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;activity_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;surgeon&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;provider_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;crm_number&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CRM/SP 123456&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;activity_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;organization_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-01T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-01T10:00:00Z&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="52-atualizar-membro">5.2 Atualizar Membro</h3>
+<p><strong><code>PATCH /organizations/{org_id}/surgical-providers/{id}/</code></strong></p>
+<p>Todos os campos são opcionais. Apenas os campos enviados serão atualizados.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="s2">&quot;https://api.lyahealth.com.br/integration/api/v2/organizations/minha-org/surgical-providers/1/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer SEU_TOKEN&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;crm_number&quot;: &quot;CRM/SP 654321&quot;}&#39;</span>
+</code></pre></div>
+<h3 id="53-desativar-membro">5.3 Desativar Membro</h3>
+<p><strong><code>DELETE /organizations/{org_id}/surgical-providers/{id}/</code></strong></p>
+<p>Retorna <code>204 No Content</code>. O membro é marcado como <code>is_active=false</code>.</p>
+<h2 id="6-definicao-completa-da-api">6. Definição completa da API</h2>
+<p>A definição OpenAPI completa com todos os schemas e parâmetros de filtro está disponível em:</p>
+<p>🔗 <a href="../api/">Documentação completa dos endpoints</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
